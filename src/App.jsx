@@ -7,8 +7,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState('')
   const [allData, setAllData] = useState('')
   const [allCountries, setAllCountries] = useState([])
-  // const [specificCountry, setSpecificCountry] = useState('')
-
+  const [matches, setMatches] = useState([])
 
   useEffect(() => {
     axios
@@ -19,20 +18,19 @@ const App = () => {
       })
   }, [])
 
-  console.log(allData);
-  
-  
-
   const handleInputValue = (e) => {
     setInputValue(e.target.value)
   }
 
-  const countryMatch = allCountries
+  let countryMatch = allCountries
     .filter(countries => 
       countries
         .toLowerCase()
         .includes(inputValue.toLowerCase()))  
   
+  const handleMatch = (country) => {
+    setMatches([country])
+  }
   
   return (
     <div>
@@ -40,7 +38,7 @@ const App = () => {
         Find Countries: 
         <input value={inputValue} onChange={handleInputValue} /> 
       </p>
-      <Display allData={allData} inputValue={inputValue} allCountries={allCountries} countries={countryMatch} />
+      <Display match={matches} onClick={handleMatch} allData={allData} inputValue={inputValue} allCountries={allCountries} countries={countryMatch} />
     </div>
   )
 }
